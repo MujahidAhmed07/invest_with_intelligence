@@ -6,16 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.invest_with_intelligence.invest_with_intelligence.iwi_entities.AdminEntity.Iwi_admin_entity;
+import com.invest_with_intelligence.invest_with_intelligence.iwi_model.AdminEntity.Iwi_admin_entity;
 import com.invest_with_intelligence.invest_with_intelligence.iwi_services.AdminServices.Iwi_admin_service;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("api/iwi/admin")
 public class Iwi_admin_controller {
 
     @Autowired
@@ -31,7 +30,7 @@ public class Iwi_admin_controller {
     @GetMapping("/admin_account/check")
     public String check() {
         return "test api";
-    }
+    }   
 
     @GetMapping("/admin_account/{id}")
     public Iwi_admin_entity get_admin_by_id(@PathVariable("id") Long admin_login_id) {
@@ -43,9 +42,9 @@ public class Iwi_admin_controller {
         return iwi_admin_service.add_admin_account(iwi_admin_entity);
     }
 
-    @PutMapping("/change_admin_account/{id}")
-    public Iwi_admin_entity change_admin_account(@RequestBody Iwi_admin_entity iwi_admin_entity) {
-        return iwi_admin_service.change_admin_account(iwi_admin_entity);
-    }
+    // @PutMapping("/change_admin_account/{id}")
+    // public Iwi_admin_entity change_admin_account(@RequestBody Iwi_admin_entity iwi_admin_entity) {
+    //     return iwi_admin_service.change_admin_account(iwi_admin_entity);
+    // }
 
 }

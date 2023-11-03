@@ -1,16 +1,19 @@
-package com.invest_with_intelligence.invest_with_intelligence.iwi_services.ServiceImplementation.AdminServiceImp;
+package com.invest_with_intelligence.invest_with_intelligence.iwi_services.ServiceImplementation;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.invest_with_intelligence.invest_with_intelligence.iwi_entities.AdminEntity.Iwi_admin_entity;
+import com.invest_with_intelligence.invest_with_intelligence.iwi_model.AdminEntity.Iwi_admin_entity;
 import com.invest_with_intelligence.invest_with_intelligence.iwi_repositories.AdminRepository.Iwi_admin_repository;
 import com.invest_with_intelligence.invest_with_intelligence.iwi_services.AdminServices.Iwi_admin_service;
 
 @Service
 public class Iwi_admin_service_Impl implements Iwi_admin_service {
 
+    @Autowired
     private Iwi_admin_repository iwi_admin_repository;
 
     @Override
@@ -23,9 +26,14 @@ public class Iwi_admin_service_Impl implements Iwi_admin_service {
         throw new UnsupportedOperationException("Unimplemented method 'get_admin'");
     }
 
+    // @Override
+    // public Iwi_admin_entity get_admin_by_id(Long admin_login_id) {
+    // return iwi_admin_repository.findById(admin_login_id);
+    // }
     @Override
-    public Iwi_admin_entity get_admin_by_id(Long admin_login_id) {
-        throw new UnsupportedOperationException("Unimplemented method 'get_admin_by_id'");
+    public Iwi_admin_entity get_admin_by_id(Long adminLoginId) {
+        Optional<Iwi_admin_entity> adminOptional = iwi_admin_repository.findById(adminLoginId);
+        return adminOptional.orElse(null);
     }
 
     @Override
