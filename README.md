@@ -24,3 +24,6 @@ Configuration -
 Created APIs -
     - Admin account added POST Api
     - Admin account fetch GET Api
+
+Date 23/12/2023 - 
+    - Rebuild Whole Back End
