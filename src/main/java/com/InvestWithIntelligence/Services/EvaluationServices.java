@@ -8,4 +8,6 @@ public interface EvaluationServices {
 
     Optional<Evaluation> findById(Long id);
 
+    Evaluation addEvaluation(Evaluation evaluation);
+
 }

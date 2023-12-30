@@ -3,6 +3,9 @@ package com.InvestWithIntelligence.Services.ServicesImpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.InvestWithIntelligence.Models.Investor;
@@ -13,7 +16,9 @@ import com.InvestWithIntelligence.Utils.AppConstants;
 @Service
 public class InvestorServiceImpl implements InvestorServices {
 
+    @Autowired
     private InvestorRepository investorRepository;
+    private static final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
 
     @Override
     public Investor findByUsername(String username) {
@@ -35,7 +40,23 @@ public class InvestorServiceImpl implements InvestorServices {
 
     @Override
     public Investor addAccount(Investor investorModel) {
-        return this.investorRepository.save(investorModel);
+        try {
+            if (investorRepository == null) {
+                throw new IllegalArgumentException(AppConstants.OBJ_NOT_NULL);
+            }
+            if (investorRepository.existsByUsername(investorModel.getUsername())) {
+                throw new IllegalArgumentException(AppConstants.USERNAME_EXISTS);
+            }
+            if (investorRepository.existsByEmail(investorModel.getEmail())) {
+                throw new IllegalArgumentException(AppConstants.EMAIL_EXISTS);
+            }
+            return this.investorRepository.save(investorModel);
+        } catch (Exception ex) {
+
+            logger.error("Error in register Admin", ex);
+            throw ex;
+        }
+
     }
 
     @Override

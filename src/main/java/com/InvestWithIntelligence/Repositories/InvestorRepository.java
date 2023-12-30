@@ -12,4 +12,8 @@ public interface InvestorRepository extends JpaRepository<Investor, Long> {
 
     Investor findByEmail(String email);
 
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
+
 }

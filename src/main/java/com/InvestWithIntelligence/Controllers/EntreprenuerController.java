@@ -58,7 +58,7 @@ public class EntreprenuerController {
         return new ResponseEntity<>(fetchedAccount, HttpStatus.OK);
     }
 
-    @GetMapping("/get/allentreprenuer")
+    @GetMapping("/get/all/entreprenuer")
     public ResponseEntity<List<Entreprenuer>> fetchAll() {
         logger.info("in EntreprenuerController.fetchAll() : {}");
         List<Entreprenuer> allEntreprenuers = entreprenuerServices.fetchAll();

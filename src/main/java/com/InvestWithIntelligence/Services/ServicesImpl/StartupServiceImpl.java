@@ -21,9 +21,9 @@ public class StartupServiceImpl implements StartupServices {
                 throw new IllegalArgumentException("StartupModel cannot be null or Empty");
             }
             return this.startupRepository.save(startupModel);
-        } catch (Exception e) {
+        } catch (Exception ex) {
             // Log the error
-            logger.error("Error adding startup", e);
+            logger.error("Error adding startup", ex);
             return null;
         }
     }

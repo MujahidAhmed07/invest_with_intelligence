@@ -22,4 +22,12 @@ public class EvaluationServiceImpl implements EvaluationServices {
         return this.evaluationRepository.findById(id);
     }
 
+    @Override
+    public Evaluation addEvaluation(Evaluation evaluation) {
+        if (evaluation == null) {
+            throw new IllegalArgumentException(AppConstants.OBJ_NOT_NULL);
+        }
+        return evaluationRepository.save(evaluation);
+    }
+
 }

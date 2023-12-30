@@ -52,8 +52,13 @@ public class Entreprenuer {
     @JoinColumn(name = "entreprenuer_meta_id")
     private EntreprenuerMetaData entreprenuerMetadata;
 
-    // @OneToOne(mappedBy = "entreprenuer")
-    // private Startup startup;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "startup_id")
+    private Startup startup;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "model_id")
+    private Evaluation evaluation;
 
     public Entreprenuer(Long id, String username, String email, String password, String role,
             EntreprenuerMetaData entreprenuerMetadata) {

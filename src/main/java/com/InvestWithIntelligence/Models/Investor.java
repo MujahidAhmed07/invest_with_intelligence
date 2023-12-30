@@ -13,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +22,6 @@ import lombok.ToString;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -53,4 +51,14 @@ public class Investor {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "investor_meta_id")
     private InvestorMetadata investorMetadata;
+
+    public Investor(Long id, String username, String email, String password, String role,
+            InvestorMetadata investorMetadata) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.investorMetadata = investorMetadata;
+    }
 }

@@ -46,11 +46,18 @@ public class EntreprenuerServiceImpl implements EntreprenuerServices {
         if (entreprenuerModel == null) {
             throw new IllegalArgumentException(AppConstants.OBJ_NOT_NULL);
         }
+        if (entreprenuerRepository.existsByUsername(entreprenuerModel.getUsername())) {
+            throw new IllegalArgumentException(AppConstants.USERNAME_EXISTS);
+        }
+        if (entreprenuerRepository.existsByEmail(entreprenuerModel.getEmail())) {
+            throw new IllegalArgumentException(AppConstants.EMAIL_EXISTS);
+        }
+
         return this.entreprenuerRepository.save(entreprenuerModel);
     }
 
     @Override
     public List<Entreprenuer> fetchAll() {
-        return this.entreprenuerRepository.findAll();
+        return this.entreprenuerRepository.findAllCustomQuery();
     }
 }
