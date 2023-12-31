@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import com.InvestWithIntelligence.Models.Admin;
 
+import jakarta.validation.Valid;
+
 public interface AdminServices {
 
     Admin findByEmail(String email);
@@ -13,5 +15,9 @@ public interface AdminServices {
     Admin findByUsername(String username);
 
     Optional<Admin> findById(Long id);
+
+    Admin updateAccount(Admin adminModel, Long id);
+
+    boolean deleteAccount(@Valid Long id);
 
 }

@@ -1,6 +1,6 @@
 package com.InvestWithIntelligence.Models;
 
-import com.InvestWithIntelligence.Utils.AppConstants;
+import com.InvestWithIntelligence.Utils.IwIConstants;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,21 +32,21 @@ public class Entreprenuer {
     @Column(name = "entreprenuer_id")
     private Long id;
 
-    @NotEmpty(message = AppConstants.NOT_EMPTY)
+    @NotEmpty(message = IwIConstants.NOT_EMPTY)
     @Column(name = "entreprenuer_username")
     private String username;
 
-    @NotEmpty(message = AppConstants.NOT_EMPTY)
+    @NotEmpty(message = IwIConstants.NOT_EMPTY)
     @Column(name = "entreprenuer_email")
     private String email;
 
-    @NotEmpty(message = AppConstants.NOT_EMPTY)
+    @NotEmpty(message = IwIConstants.NOT_EMPTY)
     @Column(name = "entreprenuer_password")
     private String password;
 
-    @NotEmpty(message = AppConstants.NOT_EMPTY)
+    @NotEmpty(message = IwIConstants.NOT_EMPTY)
     @Column(name = "role")
-    private String role = AppConstants.ENTREPRENUER_ROLE;
+    private String role = IwIConstants.ENTREPRENUER_ROLE;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "entreprenuer_meta_id")

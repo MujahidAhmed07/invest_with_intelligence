@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.InvestWithIntelligence.Models.EntreprenuerMetaData;
 import com.InvestWithIntelligence.Repositories.EmetaRepository;
 import com.InvestWithIntelligence.Services.EmetaServices;
-import com.InvestWithIntelligence.Utils.AppConstants;
+import com.InvestWithIntelligence.Utils.IwIConstants;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -25,11 +25,11 @@ public class EmetaServiceImpl implements EmetaServices {
             EntreprenuerMetaData emodel) {
         try {
             if (emodel == null) {
-                throw new IllegalArgumentException(AppConstants.OBJ_NOT_NULL);
+                throw new IllegalArgumentException(IwIConstants.OBJ_NOT_NULL);
             }
 
             EntreprenuerMetaData e_metaData = emetaRepository.findById(meta_id)
-                    .orElseThrow(() -> new EntityNotFoundException(AppConstants.ID_NOT_FOUND));
+                    .orElseThrow(() -> new EntityNotFoundException(IwIConstants.ID_NOT_FOUND));
 
             e_metaData.setFname(emodel.getFname());
             e_metaData.setLname(emodel.getLname());

@@ -36,7 +36,7 @@ public class Startup {
 
     // @NotEmpty(message = AppConstants.NOT_EMPTY)
     @Column(name = "team_size")
-    private int team_size;
+    private long team_size;
 
     // @NotEmpty(message = AppConstants.NOT_EMPTY)
     @Column(name = "startup_details")

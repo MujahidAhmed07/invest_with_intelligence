@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.InvestWithIntelligence.Models.Evaluation;
 import com.InvestWithIntelligence.Repositories.EvaluationRepository;
 import com.InvestWithIntelligence.Services.EvaluationServices;
-import com.InvestWithIntelligence.Utils.AppConstants;
+import com.InvestWithIntelligence.Utils.IwIConstants;
 
 @Service
 public class EvaluationServiceImpl implements EvaluationServices {
@@ -17,7 +17,7 @@ public class EvaluationServiceImpl implements EvaluationServices {
     @Override
     public Optional<Evaluation> findById(Long id) {
         if (id == null || id <= 0) {
-            throw new IllegalArgumentException(AppConstants.ID_VALIDATION);
+            throw new IllegalArgumentException(IwIConstants.ID_VALIDATION);
         }
         return this.evaluationRepository.findById(id);
     }
@@ -25,7 +25,7 @@ public class EvaluationServiceImpl implements EvaluationServices {
     @Override
     public Evaluation addEvaluation(Evaluation evaluation) {
         if (evaluation == null) {
-            throw new IllegalArgumentException(AppConstants.OBJ_NOT_NULL);
+            throw new IllegalArgumentException(IwIConstants.OBJ_NOT_NULL);
         }
         return evaluationRepository.save(evaluation);
     }

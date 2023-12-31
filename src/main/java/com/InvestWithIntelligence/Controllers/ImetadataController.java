@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.InvestWithIntelligence.Models.EntreprenuerMetaData;
+import com.InvestWithIntelligence.Models.InvestorMetadata;
 import com.InvestWithIntelligence.Services.ImetaServices;
+import com.InvestWithIntelligence.Utils.IwIConstants;
 
 import jakarta.validation.Valid;
 
@@ -26,10 +27,13 @@ public class ImetadataController {
     private static final Logger logger = LoggerFactory.getLogger(ImetadataController.class);
 
     @PutMapping("/update/{id}")
-    private ResponseEntity<?> add_i_meta(@Valid @PathVariable("id") long meta_id,
-            @RequestBody EntreprenuerMetaData imodel) {
-
+    private ResponseEntity<?> add_i_meta(@Valid @PathVariable("id") Long meta_id,
+            @RequestBody InvestorMetadata imodel) {
         try {
+            if (meta_id == null || imodel == null || meta_id <= 0) {
+                return new ResponseEntity<>(IwIConstants.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
+            }
+
             logger.info("in ImetaServices.add_i_meta() : {}");
             return new ResponseEntity<>(this.imetaServices.updateInvestorMeta(meta_id, imodel), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -37,4 +41,5 @@ public class ImetadataController {
         }
 
     }
+
 }

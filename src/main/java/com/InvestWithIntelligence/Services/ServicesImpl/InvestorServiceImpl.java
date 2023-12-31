@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.InvestWithIntelligence.Models.Investor;
 import com.InvestWithIntelligence.Repositories.InvestorRepository;
 import com.InvestWithIntelligence.Services.InvestorServices;
-import com.InvestWithIntelligence.Utils.AppConstants;
+import com.InvestWithIntelligence.Utils.IwIConstants;
 
 @Service
 public class InvestorServiceImpl implements InvestorServices {
@@ -33,7 +33,7 @@ public class InvestorServiceImpl implements InvestorServices {
     @Override
     public Optional<Investor> findById(Long id) {
         if (id == null || id <= 0) {
-            throw new IllegalArgumentException(AppConstants.ID_VALIDATION);
+            throw new IllegalArgumentException(IwIConstants.ID_VALIDATION);
         }
         return this.investorRepository.findById(id);
     }
@@ -42,13 +42,13 @@ public class InvestorServiceImpl implements InvestorServices {
     public Investor addAccount(Investor investorModel) {
         try {
             if (investorRepository == null) {
-                throw new IllegalArgumentException(AppConstants.OBJ_NOT_NULL);
+                throw new IllegalArgumentException(IwIConstants.OBJ_NOT_NULL);
             }
             if (investorRepository.existsByUsername(investorModel.getUsername())) {
-                throw new IllegalArgumentException(AppConstants.USERNAME_EXISTS);
+                throw new IllegalArgumentException(IwIConstants.USERNAME_EXISTS);
             }
             if (investorRepository.existsByEmail(investorModel.getEmail())) {
-                throw new IllegalArgumentException(AppConstants.EMAIL_EXISTS);
+                throw new IllegalArgumentException(IwIConstants.EMAIL_EXISTS);
             }
             return this.investorRepository.save(investorModel);
         } catch (Exception ex) {

@@ -39,7 +39,7 @@ public class InvestorController {
 
     }
 
-    @GetMapping("/get/investoremail/{email}")
+    @GetMapping("/get/email/{email}")
     public ResponseEntity<?> fetchByEmail(@Valid @PathVariable String email) {
         try {
             logger.info("in InvestorController.fetchByEmail() : {}");
@@ -57,7 +57,7 @@ public class InvestorController {
         return new ResponseEntity<>(addedInvestor, HttpStatus.CREATED);
     }
 
-    @GetMapping("/get/allinvestors")
+    @GetMapping("/get/all/")
     public ResponseEntity<List<?>> fetchAll() {
         try {
             logger.info("in InvestorController.fetchAll() : {}");
