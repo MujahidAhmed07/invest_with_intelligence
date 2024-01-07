@@ -27,7 +27,7 @@ public class InvestorServiceImpl implements InvestorServices {
 
     @Override
     public Investor findByEmail(String email) {
-        return this.investorRepository.findByEmail(email);
+        return this.investorRepository.findByCustomEmail(email);
     }
 
     @Override

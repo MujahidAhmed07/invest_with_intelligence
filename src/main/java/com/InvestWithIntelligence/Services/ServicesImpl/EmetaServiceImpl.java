@@ -31,6 +31,9 @@ public class EmetaServiceImpl implements EmetaServices {
             EntreprenuerMetaData e_metaData = emetaRepository.findById(meta_id)
                     .orElseThrow(() -> new EntityNotFoundException(IwIConstants.ID_NOT_FOUND));
 
+            if (isEntrprenuerMetadataInvalid(emodel)) {
+                return this.objectnullException();
+            }
             e_metaData.setFname(emodel.getFname());
             e_metaData.setLname(emodel.getLname());
             e_metaData.setContact(emodel.getContact());
@@ -42,5 +45,17 @@ public class EmetaServiceImpl implements EmetaServices {
             throw ex;
         }
 
+    }
+
+    private boolean isEntrprenuerMetadataInvalid(EntreprenuerMetaData emodel) {
+        return emodel == null ||
+                emodel.getFname() == null || emodel.getFname().isEmpty() ||
+                emodel.getLname() == null || emodel.getLname().isEmpty() ||
+                emodel.getContact() == null || emodel.getContact().isEmpty();
+
+    }
+
+    private EntreprenuerMetaData objectnullException() {
+        throw new IllegalArgumentException(IwIConstants.NOT_NULL_EMPTY);
     }
 }

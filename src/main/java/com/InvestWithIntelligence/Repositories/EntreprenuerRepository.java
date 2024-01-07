@@ -15,7 +15,10 @@ public interface EntreprenuerRepository extends JpaRepository<Entreprenuer, Long
     @Query("SELECT new Entreprenuer(e.id, e.username, e.email,e.password, e.role, e.entreprenuerMetadata) FROM Entreprenuer e WHERE e.email = :email")
     Entreprenuer findByEmail(@Param("email") String email);
 
-    @Query("SELECT e, m FROM Entreprenuer e JOIN e.entreprenuerMetadata m")
+    @Query("SELECT e, m, s, ev FROM Entreprenuer e " +
+            "JOIN e.entreprenuerMetadata m " +
+            "JOIN e.startup s " +
+            "JOIN e.evaluation ev")
     List<Entreprenuer> findAllCustomQuery();
 
     Entreprenuer findByUsername(String username);
