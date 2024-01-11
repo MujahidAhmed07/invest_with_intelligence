@@ -58,12 +58,10 @@ public class StartupServiceImpl implements StartupServices {
     public Startup updateStartup(Long id, Startup startupModel) {
         try {
             if (id == null || id <= 0) {
-                logger.error("Error 1");
                 throw new IllegalArgumentException(IwIConstants.ID_VALIDATION);
             }
 
             if (startupModel == null) {
-                logger.error("Error 2");
                 throw new IllegalArgumentException(IwIConstants.NOT_NULL_EMPTY);
             }
 
@@ -77,13 +75,11 @@ public class StartupServiceImpl implements StartupServices {
             startDetailsUpdate.setStartupCategory(startupModel.getStartupCategory());
 
             if (isStartupInvalid(startDetailsUpdate)) {
-                logger.error("Error 3");
                 return this.objectnullException();
             }
 
             return this.startupRepository.save(startDetailsUpdate);
         } catch (Exception e) {
-            logger.error("Error 4");
             throw new IllegalArgumentException(IwIConstants.NOT_NULL_EMPTY);
         }
 

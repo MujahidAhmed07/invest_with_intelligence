@@ -12,8 +12,8 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 
     public Admin findByUsernameIgnoreCase(String username);
 
-    boolean existsByEmail(String email);
+    boolean existsByEmailIgnoreCase(String email);
 
-    boolean existsByUsername(String username);
+    boolean existsByUsernameIgnoreCase(String username);
 
 }

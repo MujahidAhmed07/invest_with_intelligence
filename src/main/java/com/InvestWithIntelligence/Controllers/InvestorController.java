@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.InvestWithIntelligence.Models.Investor;
 import com.InvestWithIntelligence.Services.InvestorServices;
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -67,6 +67,13 @@ public class InvestorController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @DeleteMapping("delete/account/{id}")
+    private ResponseEntity<?> deleteAccount(@Valid @PathVariable("id") Long id) {
+        logger.info("in InvestorController.deleteAccount() : {}");
+        this.investorServices.deleteById(id);
+        return new ResponseEntity<>("Account Deleted", HttpStatus.OK);
     }
 
 }

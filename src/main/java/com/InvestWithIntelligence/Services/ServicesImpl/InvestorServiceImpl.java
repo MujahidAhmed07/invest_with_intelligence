@@ -53,7 +53,7 @@ public class InvestorServiceImpl implements InvestorServices {
             return this.investorRepository.save(investorModel);
         } catch (Exception ex) {
 
-            logger.error("Error in register Admin", ex);
+            logger.error("Error in register Investor", ex);
             throw ex;
         }
 
@@ -62,6 +62,19 @@ public class InvestorServiceImpl implements InvestorServices {
     @Override
     public List<Investor> fetchAll() {
         return this.investorRepository.findAll();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        try {
+            if (id == null || id <= 0) {
+                throw new IllegalArgumentException(IwIConstants.ID_VALIDATION);
+            }
+            this.investorRepository.deleteById(id);
+        } catch (Exception e) {
+            logger.error("Error in Delete Investor");
+            e.printStackTrace();
+        }
     }
 
 }

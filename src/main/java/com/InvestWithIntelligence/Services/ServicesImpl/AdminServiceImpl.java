@@ -37,10 +37,10 @@ public class AdminServiceImpl implements AdminServices {
             if (adminModel == null) {
                 throw new IllegalArgumentException(IwIConstants.OBJ_NOT_NULL);
             }
-            if (adminRepository.existsByUsername(adminModel.getUsername())) {
+            if (adminRepository.existsByUsernameIgnoreCase(adminModel.getUsername())) {
                 throw new IllegalArgumentException(IwIConstants.USERNAME_EXISTS);
             }
-            if (adminRepository.existsByEmail(adminModel.getEmail())) {
+            if (adminRepository.existsByEmailIgnoreCase(adminModel.getEmail())) {
                 throw new IllegalArgumentException(IwIConstants.EMAIL_EXISTS);
             }
             return this.adminRepository.save(adminModel);
@@ -85,9 +85,9 @@ public class AdminServiceImpl implements AdminServices {
             adminModel = (id == null || id <= 0) ? throwException() : adminModel;
             adminModel = (adminModel == null) ? objectnullException() : adminModel;
 
-            adminModel = adminRepository.existsByUsername(adminModel.getUsername()) ? usernameExists()
+            adminModel = adminRepository.existsByUsernameIgnoreCase(adminModel.getUsername()) ? usernameExists()
                     : adminModel;
-            adminModel = adminRepository.existsByEmail(adminModel.getEmail()) ? emailExists()
+            adminModel = adminRepository.existsByEmailIgnoreCase(adminModel.getEmail()) ? emailExists()
                     : adminModel;
 
             Admin updateadminModel = this.adminRepository.findById(id)

@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import com.InvestWithIntelligence.Models.Entreprenuer;
 
+import jakarta.validation.Valid;
+
 public interface EntreprenuerServices {
 
     Entreprenuer findByUsername(String entreprenuer_username);
@@ -16,5 +18,7 @@ public interface EntreprenuerServices {
     Entreprenuer addAccount(Entreprenuer entreprenuerModel);
 
     List<Entreprenuer> fetchAll();
+
+    void deleteById(@Valid Long id);
 
 }

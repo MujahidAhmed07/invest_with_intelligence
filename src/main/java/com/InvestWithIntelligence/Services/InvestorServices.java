@@ -17,4 +17,6 @@ public interface InvestorServices {
 
     List<Investor> fetchAll();
 
+    void deleteById(Long id);
+
 }

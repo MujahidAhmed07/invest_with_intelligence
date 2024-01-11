@@ -3,6 +3,8 @@ package com.InvestWithIntelligence.Services.ServicesImpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ public class EntreprenuerServiceImpl implements EntreprenuerServices {
 
     @Autowired
     private EntreprenuerRepository entreprenuerRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(EntreprenuerServiceImpl.class);
 
     @Override
     public Entreprenuer findByUsername(String username) {
@@ -59,5 +63,18 @@ public class EntreprenuerServiceImpl implements EntreprenuerServices {
     @Override
     public List<Entreprenuer> fetchAll() {
         return this.entreprenuerRepository.findAllCustomQuery();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        try {
+            if (id == null || id <= 0) {
+                throw new IllegalArgumentException(IwIConstants.ID_VALIDATION);
+            }
+            this.entreprenuerRepository.deleteById(id);
+        } catch (Exception e) {
+            logger.error("Error in Delete Entreprenuer");
+            e.printStackTrace();
+        }
     }
 }

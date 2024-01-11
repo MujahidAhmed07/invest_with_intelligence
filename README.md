@@ -34,6 +34,11 @@ Date 23/12/2023 -
     - Rebuild Whole Project. from Spring Boot Version 2.1.8 to 3.1.7 (Reason vulnerabilities with MYSQL dependancy 8.0.33)
 
 
+11-01-2024
+
+ - Created Backend Apis
+      - Added Deleted APIs 
+      
 08-01-2024
 
  - Created Backend Apis
