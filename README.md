@@ -12,27 +12,19 @@ In this project, we aim to build a web-based application that predicts the Succe
 
 DEVELOPMENT PHASE
 
-Date 4/11/2023 - Update
-
-Created Modules -
-    - Controller
-    - Service
-    - Repository
-    - ServiceImplementation
-
-Configuration -
-    - MySql Configuration 
-
-Created APIs -
-    - Admin account added POST Api
-    - Admin account fetch GET Api
 
 
  --------------------------- Rebuild Whole Project ---------------------------
 
 Date 23/12/2023 - 
+
     - Rebuild Whole Project. from Spring Boot Version 2.1.8 to 3.1.7 (Reason vulnerabilities with MYSQL dependancy 8.0.33)
 
+11-01-2024
+
+ - Configure Security
+      - Authentication/Authorization
+        in APIs 
 
 11-01-2024
 
@@ -72,3 +64,21 @@ Date 23/12/2023 -
       - InvestorMetadeta
       - Entreprenuer
       - EntreprenuerMe
+
+
+-------------------- OLD PROJECT -------------------- 
+      
+Date 4/11/2023 - Update
+
+Created Modules -
+    - Controller
+    - Service
+    - Repository
+    - ServiceImplementation
+
+Configuration -
+    - MySql Configuration 
+
+Created APIs -
+    - Admin account added POST Api
+    - Admin account fetch GET Api

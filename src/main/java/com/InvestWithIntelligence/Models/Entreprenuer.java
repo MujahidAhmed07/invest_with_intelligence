@@ -1,7 +1,10 @@
 package com.InvestWithIntelligence.Models;
 
-import com.InvestWithIntelligence.Utils.IwIConstants;
+import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import com.InvestWithIntelligence.Utils.IwIConstants;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +29,7 @@ import lombok.ToString;
 @Setter
 @Table(name = "entreprenuer")
 @ToString
-public class Entreprenuer {
+public class Entreprenuer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "entreprenuer_id")
@@ -46,7 +49,8 @@ public class Entreprenuer {
 
     @NotEmpty(message = IwIConstants.NOT_EMPTY)
     @Column(name = "role")
-    private String role = IwIConstants.ENTREPRENUER_ROLE;
+    // @Enumerated(EnumType.STRING)
+    private String role = "ENTREPRENUER";
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "entreprenuer_meta_id")
@@ -60,13 +64,42 @@ public class Entreprenuer {
     @JoinColumn(name = "model_id")
     private Evaluation evaluation;
 
-    public Entreprenuer(Long id, String username, String email, String password, String role,
+    public Entreprenuer(Long id, String username, String email, String password,
             EntreprenuerMetaData entreprenuerMetadata) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.role = role;
         this.entreprenuerMetadata = entreprenuerMetadata;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 }

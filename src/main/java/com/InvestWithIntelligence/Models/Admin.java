@@ -1,5 +1,9 @@
 package com.InvestWithIntelligence.Models;
 
+import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.InvestWithIntelligence.Utils.IwIConstants;
 
 import jakarta.persistence.Column;
@@ -24,7 +28,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "admin_data")
-public class Admin {
+public class Admin implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "admin_id")
@@ -44,5 +48,36 @@ public class Admin {
 
     @NotEmpty(message = IwIConstants.NOT_EMPTY)
     @Column(name = "role")
-    private String role = IwIConstants.ADMIN_ROLE;
+    // @Enumerated(EnumType.STRING)
+    private String role = "ADMIN";
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 }

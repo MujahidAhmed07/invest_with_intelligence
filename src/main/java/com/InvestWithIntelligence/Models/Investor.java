@@ -1,5 +1,9 @@
 package com.InvestWithIntelligence.Models;
 
+import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.InvestWithIntelligence.Utils.IwIConstants;
 
 import jakarta.persistence.CascadeType;
@@ -26,7 +30,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "investor_data")
-public class Investor {
+public class Investor implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "investor_id")
@@ -46,19 +50,49 @@ public class Investor {
 
     @NotEmpty(message = IwIConstants.NOT_EMPTY)
     @Column(name = "role")
-    private String role = IwIConstants.INVESTOR_ROLE;
+    // @Enumerated(EnumType.STRING)
+    private String role = "INVESTOR";
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "investor_meta_id")
     private InvestorMetadata investorMetadata;
 
-    public Investor(Long id, String username, String email, String password, String role,
+    public Investor(Long id, String username, String email, String password,
             InvestorMetadata investorMetadata) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.role = role;
         this.investorMetadata = investorMetadata;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 }

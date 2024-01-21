@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.InvestWithIntelligence.Models.Admin;
@@ -21,6 +22,9 @@ public class AdminServiceImpl implements AdminServices {
 
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Admin findByEmail(String admin_email) {
@@ -43,7 +47,12 @@ public class AdminServiceImpl implements AdminServices {
             if (adminRepository.existsByEmailIgnoreCase(adminModel.getEmail())) {
                 throw new IllegalArgumentException(IwIConstants.EMAIL_EXISTS);
             }
+
+            // Random Id Saved
+            // adminModel.setUserId(UUID.randomUUID().toString());
+            adminModel.setPassword(passwordEncoder.encode(adminModel.getPassword()));
             return this.adminRepository.save(adminModel);
+
         } catch (Exception ex) {
 
             logger.error("Error in register Admin", ex);
@@ -81,8 +90,10 @@ public class AdminServiceImpl implements AdminServices {
     public Admin updateAccount(Admin adminModel, Long id) {
 
         try {
+            if (id == null || id <= 0) {
+                return throwException();
+            }
 
-            adminModel = (id == null || id <= 0) ? throwException() : adminModel;
             adminModel = (adminModel == null) ? objectnullException() : adminModel;
 
             adminModel = adminRepository.existsByUsernameIgnoreCase(adminModel.getUsername()) ? usernameExists()
@@ -111,7 +122,11 @@ public class AdminServiceImpl implements AdminServices {
 
     @Override
     public boolean deleteAccount(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException(IwIConstants.ID_VALIDATION);
+        }
         this.adminRepository.deleteById(id);
+
         return true;
     }
 
