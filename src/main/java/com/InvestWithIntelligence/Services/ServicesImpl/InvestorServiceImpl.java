@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.InvestWithIntelligence.Models.Investor;
@@ -15,6 +16,9 @@ import com.InvestWithIntelligence.Utils.IwIConstants;
 
 @Service
 public class InvestorServiceImpl implements InvestorServices {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private InvestorRepository investorRepository;
@@ -50,6 +54,7 @@ public class InvestorServiceImpl implements InvestorServices {
             if (investorRepository.existsByEmail(investorModel.getEmail())) {
                 throw new IllegalArgumentException(IwIConstants.EMAIL_EXISTS);
             }
+            investorModel.setPassword(passwordEncoder.encode(investorModel.getPassword()));
             return this.investorRepository.save(investorModel);
         } catch (Exception ex) {
 

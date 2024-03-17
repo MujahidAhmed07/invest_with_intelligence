@@ -16,22 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.InvestWithIntelligence.AuthResponse.JwtRequest;
 import com.InvestWithIntelligence.AuthResponse.JwtResponse;
-import com.InvestWithIntelligence.Models.Admin;
 import com.InvestWithIntelligence.Security.JWT.JwtHelper;
 import com.InvestWithIntelligence.Services.UserService;
-import com.InvestWithIntelligence.Services.ServicesImpl.AdminServiceImpl;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/iwi/auth")
 public class AuthController {
 
     @Autowired
-    private UserService adminUserService;
-
-    @Autowired
-    private AdminServiceImpl adminServiceImpl;
+    private UserService userService;
 
     @Autowired
     private AuthenticationManager manager;
@@ -41,11 +34,32 @@ public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-    // login Authnetication
-    @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
+    // Admin login Authnetication
+    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("admin/login")
+    public ResponseEntity<JwtResponse> adminLogin(@RequestBody JwtRequest request) {
+        try {
+            this.doAuthenticate(request.getEmail(), request.getPassword());
+            UserDetails userdetails = userService.loadUserByUsername(request.getEmail());
+            String token = this.jwtHelper.generateToken(userdetails);
+
+            JwtResponse response = JwtResponse.builder().jwtToken(token).username(userdetails.getUsername()).build();
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info("Login Admin Account By Username");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    // Investor Login Authentication
+
+    // @PreAuthorize("hasRole('ROLE_INVESTOR')")
+    @PostMapping("investor/login")
+    public ResponseEntity<JwtResponse> investorLogin(@RequestBody JwtRequest request) {
         this.doAuthenticate(request.getEmail(), request.getPassword());
-        UserDetails userdetails = adminUserService.loadUserByUsername(request.getEmail());
+        UserDetails userdetails = userService.loadUserByUsername(request.getEmail());
         String token = this.jwtHelper.generateToken(userdetails);
 
         JwtResponse response = JwtResponse.builder().jwtToken(token).username(userdetails.getUsername()).build();
@@ -54,27 +68,24 @@ public class AuthController {
 
     }
 
-    // Investor Login Authentication
-
     // Entreprenuer Login
 
-    // Add Admin Account
-    @PostMapping("/add/account")
-    private ResponseEntity<?> add_admin_account(@Valid @RequestBody Admin adminModel) {
-        try {
-            logger.info("in AdminController.add_admin_account() : {}");
-            return new ResponseEntity<>(this.adminServiceImpl.addAccount(adminModel), HttpStatus.CREATED);
-        } catch (Exception e) {
-            logger.info("Admin Account Error");
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    // @PreAuthorize("hasRole('ROLE_ENTREPRENUER')")
+    @PostMapping("entreprenuer/login")
+    public ResponseEntity<JwtResponse> entreprenuerLogin(@RequestBody JwtRequest request) {
+        this.doAuthenticate(request.getEmail(), request.getPassword());
+        UserDetails userdetails = userService.loadUserByUsername(request.getEmail());
+        String token = this.jwtHelper.generateToken(userdetails);
+
+        JwtResponse response = JwtResponse.builder().jwtToken(token).username(userdetails.getUsername()).build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
     // Authentication of URLS
     private void doAuthenticate(String email, String password) {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
-
         try {
             manager.authenticate(authentication);
         } catch (BadCredentialsException e) {

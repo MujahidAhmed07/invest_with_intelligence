@@ -20,7 +20,7 @@ public interface InvestorRepository extends JpaRepository<Investor, Long> {
 
     boolean existsByEmail(String email);
 
-    @Query("SELECT new Investor(i.id, i.username, i.email,i.password, i.role, i.investorMetadata) FROM Investor i WHERE i.email = :email")
+    @Query("SELECT new Investor(i.id, i.username, i.email,i.password, i.investorMetadata) FROM Investor i WHERE i.email = :email")
     Investor findByCustomEmail(@Param("email") String email);
 
     @Query("SELECT i, m FROM Investor i JOIN i.investorMetadata m")

@@ -12,7 +12,7 @@ import com.InvestWithIntelligence.Models.Entreprenuer;
 @Repository
 public interface EntreprenuerRepository extends JpaRepository<Entreprenuer, Long> {
 
-    @Query("SELECT new Entreprenuer(e.id, e.username, e.email,e.password, e.role, e.entreprenuerMetadata) FROM Entreprenuer e WHERE e.email = :email")
+    @Query("SELECT new Entreprenuer(e.id, e.username, e.email,e.password, e.entreprenuerMetadata) FROM Entreprenuer e WHERE e.email = :email")
     Entreprenuer findByEmail(@Param("email") String email);
 
     @Query("SELECT e, m, s, ev FROM Entreprenuer e " +

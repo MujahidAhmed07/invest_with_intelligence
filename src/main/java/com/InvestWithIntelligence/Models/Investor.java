@@ -1,7 +1,10 @@
 package com.InvestWithIntelligence.Models;
 
 import java.util.Collection;
+import java.util.Collections;
+
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.InvestWithIntelligence.Utils.IwIConstants;
@@ -68,7 +71,8 @@ public class Investor implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        // Return a collection of authorities (roles) for this user
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
     @Override

@@ -29,14 +29,7 @@ public class IwIConstants {
         // API COLLECTION VARIABLES
         public static final String[] ADMIN_WHITE_LIST_URLS = {
                         "api/iwi/admin/update/account/",
-                        "api/iwi/admin/get/username",
-                        "api/iwi/investor/delete/account",
-                        "api/iwi/investor/get/email",
-                        "api/iwi/imeta/update",
-                        "api/iwi/entreprenuer/delete/account",
-                        "api/iwi/entreprenuer/get/all/entreprenuer",
-                        "api/iwi/emeta/update",
-                        "api/iwi/entreprenuer/get/email"
+                        "api/iwi/admin/get/username"
 
         };
 
@@ -57,8 +50,10 @@ public class IwIConstants {
         public static final String[] PUBLIC_WHITE_LIST_URLS = {
                         "api/iwi/entreprenuer/add/account",
                         "api/iwi/investor/add/account",
-                        "api/iwi/auth/login",
-                        "api/iwi/admin/add/account"
+                        "api/iwi/admin/add/account",
+                        "api/iwi/auth/admin/login",
+                        "api/iwi/auth/investor/login",
+                        "api/iwi/auth/entreprenuer/login"
         };
 
 }

@@ -47,6 +47,7 @@ public class AdminController {
             logger.info("in AdminController.fetchByEmail() : {}");
             return new ResponseEntity<>(this.adminServices.findByEmail(email), HttpStatus.OK);
         } catch (Exception e) {
+            logger.info("Admin get Account Error");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -58,6 +59,7 @@ public class AdminController {
             logger.info("in AdminController.fetchById() : {}");
             return new ResponseEntity<>(this.adminServices.findById(Id), HttpStatus.OK);
         } catch (Exception ex) {
+            logger.info("Admin get Account Error");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
