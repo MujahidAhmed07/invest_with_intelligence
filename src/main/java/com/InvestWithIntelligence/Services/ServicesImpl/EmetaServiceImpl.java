@@ -36,6 +36,9 @@ public class EmetaServiceImpl implements EmetaServices {
             }
             e_metaData.setFname(emodel.getFname());
             e_metaData.setLname(emodel.getLname());
+            e_metaData.setAddress(emodel.getAddress());
+            e_metaData.setCity(emodel.getCity());
+            e_metaData.setDescription(emodel.getDescription());
             e_metaData.setContact(emodel.getContact());
 
             return emetaRepository.save(e_metaData);

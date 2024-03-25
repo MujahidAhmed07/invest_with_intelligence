@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -54,6 +53,11 @@ public class Evaluation {
     @Column(name = "Other_Assets")
     private String other_assets;
 
-    @OneToOne
-    private Startup startup;
+    // @OneToOne
+    // private Startup startup;
+
+    public Evaluation(Long id) {
+        this.id = id;
+    }
+
 }

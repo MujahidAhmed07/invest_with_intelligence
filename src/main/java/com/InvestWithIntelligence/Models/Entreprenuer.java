@@ -67,13 +67,31 @@ public class Entreprenuer implements UserDetails {
     @JoinColumn(name = "model_id")
     private Evaluation evaluation;
 
-    public Entreprenuer(Long id, String username, String email, String password,
+    public Entreprenuer(Long id, String username, String email, String password, String role,
             EntreprenuerMetaData entreprenuerMetadata) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
         this.entreprenuerMetadata = entreprenuerMetadata;
+    }
+
+    public Entreprenuer(Long id, String username, String email, String password,
+            String role,
+            EntreprenuerMetaData entreprenuerMetadata, Startup startup, Evaluation evaluation) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.entreprenuerMetadata = entreprenuerMetadata;
+        this.startup = startup;
+        this.evaluation = evaluation;
+    }
+
+    public Entreprenuer(String role) {
+        this.role = role;
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.InvestWithIntelligence.Models.Investor;
+import com.InvestWithIntelligence.Models.InvestorMetadata;
 import com.InvestWithIntelligence.Repositories.InvestorRepository;
 import com.InvestWithIntelligence.Services.InvestorServices;
 import com.InvestWithIntelligence.Utils.IwIConstants;
@@ -80,6 +81,29 @@ public class InvestorServiceImpl implements InvestorServices {
             logger.error("Error in Delete Investor");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Investor updateByEmail(String email, Investor updatedInvestor) {
+        // Retrieve existing investor data from the repository based on email
+        Investor existingInvestor = investorRepository.findByEmail(email);
+
+        // Update password
+        existingInvestor.setPassword(updatedInvestor.getPassword());
+
+        // Update InvestorMetadata fields
+        InvestorMetadata updatedMetadata = updatedInvestor.getInvestorMetadata();
+        InvestorMetadata existingMetadata = existingInvestor.getInvestorMetadata();
+
+        existingMetadata.setFname(updatedMetadata.getFname());
+        existingMetadata.setLname(updatedMetadata.getLname());
+        existingMetadata.setContact(updatedMetadata.getContact());
+        existingMetadata.setCity(updatedMetadata.getCity());
+        existingMetadata.setDescription(updatedMetadata.getDescription());
+        existingMetadata.setAddress(updatedMetadata.getAddress());
+
+        // Save the updated investor data back to the repository
+        return investorRepository.save(existingInvestor);
     }
 
 }

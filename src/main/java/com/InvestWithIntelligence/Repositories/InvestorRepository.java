@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.InvestWithIntelligence.Models.Investor;
+import com.InvestWithIntelligence.Models.InvestorMetadata;
 
 @Repository
 public interface InvestorRepository extends JpaRepository<Investor, Long> {
@@ -25,5 +26,9 @@ public interface InvestorRepository extends JpaRepository<Investor, Long> {
 
     @Query("SELECT i, m FROM Investor i JOIN i.investorMetadata m")
     List<Investor> findAllCustomQuery();
+
+    @Query("UPDATE Investor i SET  i.password = :password, i.investorMetadata = :metadata WHERE i.email = :email")
+    Investor updateInvestor(@Param("email") String email,
+            @Param("password") String password, @Param("metadata") InvestorMetadata metadata);
 
 }

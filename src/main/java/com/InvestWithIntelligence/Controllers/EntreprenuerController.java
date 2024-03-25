@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/iwi/entreprenuer")
+@CrossOrigin(origins = "*")
+
 public class EntreprenuerController {
 
     @Autowired
@@ -44,10 +47,42 @@ public class EntreprenuerController {
     }
 
     @GetMapping("/get/email/{email}")
-    public ResponseEntity<?> fetchByEmail(@Valid @PathVariable String email) {
-        logger.info("in EntreprenuerController.fetchByEmail() : {}");
-        Entreprenuer fetchedAccount = entreprenuerServices.findByEmail(email);
-        return new ResponseEntity<>(fetchedAccount, HttpStatus.OK);
+    public ResponseEntity<?> fetchByEmail(@Valid @PathVariable("email") String email) {
+        try {
+            logger.info("in EntreprenuerController.fetchByEmail() : {}");
+            Entreprenuer fetchedAccount = entreprenuerServices.findByEmail(email);
+            return new ResponseEntity<>(fetchedAccount, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.info("Entreprenuer get Account Error");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @GetMapping("/get/custom/email/{email}")
+    public ResponseEntity<?> fetchCustomByEmail(@Valid @PathVariable("email") String email) {
+        try {
+            logger.info("in EntreprenuerController.fetchByEmail() : {}");
+            Entreprenuer fetchByEmail = entreprenuerServices.findByCustomEmail(email);
+            return new ResponseEntity<>(fetchByEmail, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.info("Entreprenuer get Account Error");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @GetMapping("/get/role/{email}")
+    public ResponseEntity<?> fetchByEmailByRole(@Valid @PathVariable("email") String email) {
+        try {
+            logger.info("in EntreprenuerController.fetchByEmailByRole() : {}");
+            Entreprenuer fetchedAccount = entreprenuerServices.fetchByEmailByRole(email);
+            return new ResponseEntity<>(fetchedAccount, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.info("Entreprenuer get Account Error");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @GetMapping("/get/id/{entreprenuer_id}")

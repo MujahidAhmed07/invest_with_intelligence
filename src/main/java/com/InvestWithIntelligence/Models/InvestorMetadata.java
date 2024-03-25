@@ -39,4 +39,13 @@ public class InvestorMetadata {
     @Column(name = "investor_contact")
     private String contact;
 
+    @Column(name = "investor_city")
+    private String city;
+
+    @Column(name = "investor_address")
+    private String address;
+
+    @Column(name = "investor_description")
+    private String description;
+
 }

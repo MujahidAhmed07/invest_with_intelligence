@@ -21,4 +21,8 @@ public interface EntreprenuerServices {
 
     void deleteById(@Valid Long id);
 
+    Entreprenuer fetchByEmailByRole(String email);
+
+    Entreprenuer findByCustomEmail(String email);
+
 }

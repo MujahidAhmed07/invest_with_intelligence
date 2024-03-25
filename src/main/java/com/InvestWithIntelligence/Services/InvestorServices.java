@@ -19,4 +19,6 @@ public interface InvestorServices {
 
     void deleteById(Long id);
 
+    Investor updateByEmail(String email, Investor investor);
+
 }

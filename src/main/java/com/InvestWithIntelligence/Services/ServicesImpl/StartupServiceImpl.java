@@ -1,5 +1,7 @@
 package com.InvestWithIntelligence.Services.ServicesImpl;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,6 @@ import com.InvestWithIntelligence.Models.Startup;
 import com.InvestWithIntelligence.Repositories.StartupRepository;
 import com.InvestWithIntelligence.Services.StartupServices;
 import com.InvestWithIntelligence.Utils.IwIConstants;
-
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -71,8 +72,10 @@ public class StartupServiceImpl implements StartupServices {
             startDetailsUpdate.setStartupName(startupModel.getStartupName());
             startDetailsUpdate.setTeamSize(startupModel.getTeamSize());
             startDetailsUpdate.setStartupDetails(startupModel.getStartupDetails());
-            startDetailsUpdate.setStartupLocation(startupModel.getStartupName());
+            startDetailsUpdate.setStartupShortDetails(startupModel.getStartupShortDetails());
+            startDetailsUpdate.setStartupLocation(startupModel.getStartupLocation());
             startDetailsUpdate.setStartupCategory(startupModel.getStartupCategory());
+            startDetailsUpdate.setDateJoined(startupModel.getDateJoined());
 
             if (isStartupInvalid(startDetailsUpdate)) {
                 return this.objectnullException();
@@ -98,4 +101,28 @@ public class StartupServiceImpl implements StartupServices {
     private Startup objectnullException() {
         throw new IllegalArgumentException(IwIConstants.NOT_NULL_EMPTY);
     }
+
+    @Override
+    public List<Startup> fetchAll() {
+        return this.startupRepository.findAll();
+    }
+
+    @Override
+    public Startup getAboutStartup(Long id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException(IwIConstants.ID_VALIDATION);
+        }
+        try {
+            return this.startupRepository.getAboutData(id);
+        } catch (Exception e) {
+
+            throw new RuntimeException(IwIConstants.ID_NOT_FOUND, e);
+        }
+    }
+
+    @Override
+    public List<Startup> GetHomeStartup() {
+        return this.startupRepository.GetHomeStartups();
+    }
+
 }

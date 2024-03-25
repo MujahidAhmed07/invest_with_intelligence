@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,13 +22,26 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/iwi/investor")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+
 public class InvestorController {
 
     @Autowired
     private InvestorServices investorServices;
 
     private static final Logger logger = LoggerFactory.getLogger(InvestorController.class);
+
+    @PutMapping("/update/{email}")
+    public ResponseEntity<?> updateByEmail(@Valid @PathVariable("email") String email, Investor investor) {
+        try {
+            logger.info("Updating investor by email: {}", email);
+            Investor updateData = investorServices.updateByEmail(email, investor);
+            return new ResponseEntity<>(updateData, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Error updating investor by email: {}", email, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping("/get/investorusername/{username}")
     public ResponseEntity<?> fetchByUsername(@Valid @PathVariable("username") String username) {

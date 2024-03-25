@@ -82,4 +82,14 @@ public class EntreprenuerServiceImpl implements EntreprenuerServices {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Entreprenuer fetchByEmailByRole(String email) {
+        return this.entreprenuerRepository.findByRole(email);
+    }
+
+    @Override
+    public Entreprenuer findByCustomEmail(String email) {
+        return this.entreprenuerRepository.findByCustomEmail(email);
+    }
 }

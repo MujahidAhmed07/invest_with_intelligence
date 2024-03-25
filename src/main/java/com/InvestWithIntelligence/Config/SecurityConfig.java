@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.InvestWithIntelligence.Security.JWT.JwtAuthenticationEntryPoint;
 import com.InvestWithIntelligence.Security.JWT.JwtAuthenticationFilter;
-import com.InvestWithIntelligence.Utils.IwIConstants;
 
 @Configuration
 @EnableWebSecurity

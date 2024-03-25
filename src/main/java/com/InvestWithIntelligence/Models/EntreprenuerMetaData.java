@@ -36,6 +36,25 @@ public class EntreprenuerMetaData {
     @Column(name = "entreprenuer_contact")
     private String contact;
 
+    @Column(name = "entreprenuer_city")
+    private String city;
+
+    @Column(name = "entreprenuer_address")
+    private String address;
+
+    @Column(name = "entreprenuer_description")
+    private String description;
+
+    public EntreprenuerMetaData(String fname, String lname, String contact, String city, String address,
+            String description) {
+        this.fname = fname;
+        this.lname = lname;
+        this.contact = contact;
+        this.city = city;
+        this.address = address;
+        this.description = description;
+    }
+
     // @OneToOne
     // @JoinColumn(name = "entreprenuer_id")
     // private Entreprenuer entreprenuer;

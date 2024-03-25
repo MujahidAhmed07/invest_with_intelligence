@@ -69,6 +69,21 @@ public class Investor implements UserDetails {
         this.investorMetadata = investorMetadata;
     }
 
+    // Constructor for updating existing data
+    public Investor(String username, String email, String password,
+            InvestorMetadata investorMetadata) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.investorMetadata = investorMetadata;
+    }
+
+    public Investor(String password,
+            InvestorMetadata investorMetadata) {
+        this.password = password;
+        this.investorMetadata = investorMetadata;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Return a collection of authorities (roles) for this user

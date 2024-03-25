@@ -1,10 +1,13 @@
 package com.InvestWithIntelligence.Controllers;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/iwi/startup")
+@CrossOrigin(origins = "*")
+
 public class StartupController {
 
     @Autowired
@@ -43,5 +48,25 @@ public class StartupController {
         logger.info("in StartupController.updateStartupData() : {}");
         return new ResponseEntity<>(this.startupsServices.updateStartup(
                 id, startupModel), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/get/all/")
+    private ResponseEntity<List<?>> GetAllStartups() {
+        List<Startup> fecthStartup = this.startupsServices.fetchAll();
+        return new ResponseEntity<>(fecthStartup, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/home/")
+    private ResponseEntity<List<?>> GetHomeStartups() {
+        List<Startup> fecthStartup = this.startupsServices.GetHomeStartup();
+        return new ResponseEntity<>(fecthStartup, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/about/{id}")
+    private ResponseEntity<?> getAboutStartup(@Valid @PathVariable("id") Long id) {
+        Startup getAboutDetails = this.startupsServices.getAboutStartup(id);
+        return new ResponseEntity<>(getAboutDetails, HttpStatus.OK);
     }
 }

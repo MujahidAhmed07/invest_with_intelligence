@@ -36,6 +36,9 @@ public class ImetaServicesImpl implements ImetaServices {
             i_metaData.setFname(imodel.getFname());
             i_metaData.setLname(imodel.getLname());
             i_metaData.setContact(imodel.getContact());
+            i_metaData.setAddress(imodel.getAddress());
+            i_metaData.setCity(imodel.getCity());
+            i_metaData.setDescription(imodel.getDescription());
 
             i_metaData = (i_metaData == null) ? this.objectnullException() : i_metaData;
 
