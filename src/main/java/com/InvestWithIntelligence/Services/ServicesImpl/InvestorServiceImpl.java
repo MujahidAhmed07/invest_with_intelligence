@@ -23,7 +23,7 @@ public class InvestorServiceImpl implements InvestorServices {
 
     @Autowired
     private InvestorRepository investorRepository;
-    private static final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(InvestorServiceImpl.class);
 
     @Override
     public Investor findByUsername(String username) {

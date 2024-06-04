@@ -8,6 +8,8 @@ public interface EvaluationServices {
 
     Optional<Evaluation> findById(Long id);
 
-    Evaluation addEvaluation(Evaluation evaluation);
+    Evaluation addEvaluation(String email, Evaluation evaluation);
+
+    String findByEmail(String email);
 
 }

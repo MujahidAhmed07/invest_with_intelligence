@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.InvestWithIntelligence.AuthResponse.JwtRequest;
 import com.InvestWithIntelligence.AuthResponse.JwtResponse;
+import com.InvestWithIntelligence.Entity.ApiCheck;
 import com.InvestWithIntelligence.Security.JWT.JwtHelper;
 import com.InvestWithIntelligence.Services.UserService;
 
@@ -41,19 +42,19 @@ public class AuthController {
     // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("admin/login")
     public ResponseEntity<JwtResponse> adminLogin(@RequestBody JwtRequest request) {
+        ApiCheck.entreprenuer_api_check = false;
+        ApiCheck.investor_api_check = false;
+        ApiCheck.admin_api_check = true;
         try {
             this.doAuthenticate(request.getEmail(), request.getPassword());
             UserDetails userdetails = userService.loadUserByUsername(request.getEmail());
             String token = this.jwtHelper.generateToken(userdetails);
-
             JwtResponse response = JwtResponse.builder().jwtToken(token).username(userdetails.getUsername()).build();
-
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            logger.info("Login Admin Account By Username");
+            logger.error("Error during admin login: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     // Investor Login Authentication
@@ -61,14 +62,19 @@ public class AuthController {
     // @PreAuthorize("hasRole('ROLE_INVESTOR')")
     @PostMapping("investor/login")
     public ResponseEntity<JwtResponse> investorLogin(@RequestBody JwtRequest request) {
-        this.doAuthenticate(request.getEmail(), request.getPassword());
-        UserDetails userdetails = userService.loadUserByUsername(request.getEmail());
-        String token = this.jwtHelper.generateToken(userdetails);
-
-        JwtResponse response = JwtResponse.builder().jwtToken(token).username(userdetails.getUsername()).build();
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-
+        ApiCheck.entreprenuer_api_check = false;
+        ApiCheck.admin_api_check = false;
+        ApiCheck.investor_api_check = true;
+        try {
+            this.doAuthenticate(request.getEmail(), request.getPassword());
+            UserDetails userdetails = userService.loadUserByUsername(request.getEmail());
+            String token = this.jwtHelper.generateToken(userdetails);
+            JwtResponse response = JwtResponse.builder().jwtToken(token).username(userdetails.getUsername()).build();
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Error during investor login: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Entreprenuer Login
@@ -76,14 +82,19 @@ public class AuthController {
     // @PreAuthorize("hasRole('ROLE_ENTREPRENUER')")
     @PostMapping("entreprenuer/login")
     public ResponseEntity<JwtResponse> entreprenuerLogin(@RequestBody JwtRequest request) {
-        this.doAuthenticate(request.getEmail(), request.getPassword());
-        UserDetails userdetails = userService.loadUserByUsername(request.getEmail());
-        String token = this.jwtHelper.generateToken(userdetails);
-
-        JwtResponse response = JwtResponse.builder().jwtToken(token).username(userdetails.getUsername()).build();
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-
+        ApiCheck.admin_api_check = false;
+        ApiCheck.investor_api_check = false;
+        ApiCheck.entreprenuer_api_check = true;
+        try {
+            this.doAuthenticate(request.getEmail(), request.getPassword());
+            UserDetails userdetails = userService.loadUserByUsername(request.getEmail());
+            String token = this.jwtHelper.generateToken(userdetails);
+            JwtResponse response = JwtResponse.builder().jwtToken(token).username(userdetails.getUsername()).build();
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Error during entrepreneur login: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Authentication of URLS

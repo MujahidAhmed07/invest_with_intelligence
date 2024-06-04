@@ -54,9 +54,12 @@ public class EntreprenuerServiceImpl implements EntreprenuerServices {
         if (entreprenuerModel == null) {
             throw new IllegalArgumentException(IwIConstants.OBJ_NOT_NULL);
         }
-        if (entreprenuerRepository.existsByUsername(entreprenuerModel.getUsername())) {
+        Entreprenuer existingEntreprenuer = this.findByUsername(entreprenuerModel.getEmail());
+        if (existingEntreprenuer != null
+                && existingEntreprenuer.getUsername().equals(entreprenuerModel.getEmail())) {
             throw new IllegalArgumentException(IwIConstants.USERNAME_EXISTS);
         }
+
         if (entreprenuerRepository.existsByEmail(entreprenuerModel.getEmail())) {
             throw new IllegalArgumentException(IwIConstants.EMAIL_EXISTS);
         }

@@ -39,19 +39,21 @@ public class StartupController {
 
     @GetMapping("/get/{id}")
     private ResponseEntity<?> fetchStartups(@Valid @PathVariable("id") Long id) {
-        Startup getDetails = this.startupsServices.getStartups(id);
-        return new ResponseEntity<>(getDetails, HttpStatus.OK);
+        logger.info("Fetching startup details for ID: {}", id);
+        Startup fetchedStartup = this.startupsServices.getStartups(id);
+        return new ResponseEntity<>(fetchedStartup, HttpStatus.OK);
     }
 
     @PutMapping("/update/details/{id}")
     private ResponseEntity<?> updateStartupData(@Valid @PathVariable("id") Long id, @RequestBody Startup startupModel) {
-        logger.info("in StartupController.updateStartupData() : {}");
-        return new ResponseEntity<>(this.startupsServices.updateStartup(
-                id, startupModel), HttpStatus.CREATED);
+        logger.info("Updating startup details for ID: {}", id);
+        Startup updatedStartup = this.startupsServices.updateStartup(id, startupModel);
+        return new ResponseEntity<>(updatedStartup, HttpStatus.CREATED);
     }
 
     @GetMapping("/get/all/")
     private ResponseEntity<List<?>> GetAllStartups() {
+        logger.info("Fetching all startups");
         List<Startup> fecthStartup = this.startupsServices.fetchAll();
         return new ResponseEntity<>(fecthStartup, HttpStatus.OK);
 
@@ -59,6 +61,7 @@ public class StartupController {
 
     @GetMapping("/home/")
     private ResponseEntity<List<?>> GetHomeStartups() {
+        logger.info("Fetching home startups");
         List<Startup> fecthStartup = this.startupsServices.GetHomeStartup();
         return new ResponseEntity<>(fecthStartup, HttpStatus.OK);
 
@@ -66,6 +69,7 @@ public class StartupController {
 
     @GetMapping("/about/{id}")
     private ResponseEntity<?> getAboutStartup(@Valid @PathVariable("id") Long id) {
+        logger.info("Fetching about details for startup with ID: {}", id);
         Startup getAboutDetails = this.startupsServices.getAboutStartup(id);
         return new ResponseEntity<>(getAboutDetails, HttpStatus.OK);
     }
